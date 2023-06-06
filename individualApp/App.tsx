@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -17,18 +17,14 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import Timer from "./components/timer";
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <SafeAreaView style={styles.homepage}>
       <ImageBackground resizeMode='cover' style={styles.homepageBG} source={require("./assets/backgroundWhite.jpg")}>
         <Text style={[styles.PSVFont, styles.homepageTitle]}> MATCH{'\n'} TRIVIA</Text>
-        <View style={styles.homepageTimer}>
-          <Text style={[styles.homepageTimerTitle, styles.PSVFont]}>QUIZ BEGINT OVER</Text>
-          <Text style={[styles.homepageTimerCount, styles.PSVFont]}>00:15:12</Text>
-        </View>
+        <Timer />
       </ImageBackground> 
     </SafeAreaView>
   );
@@ -52,26 +48,6 @@ const styles = StyleSheet.create({
     color: "white",
     backgroundColor: "black",
     alignSelf: "flex-start",
-  },
-
-  homepageTimer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-
-  homepageTimerTitle: {
-    color: "black",
-    fontSize: 24,
-    letterSpacing: 1,
-  },
-
-  homepageTimerCount: {
-    fontSize: 78,
-    letterSpacing: 8,
-    color: "white",
-    paddingHorizontal: 10,
-    backgroundColor: "black",
   }
 });
 
