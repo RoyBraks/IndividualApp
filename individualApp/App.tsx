@@ -17,38 +17,22 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import Timer from "./components/timer";
+import {NavigationContainer} from '@react-navigation/native';
+import HomeScreen from './components/homescreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator()
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView style={styles.homepage}>
-      <ImageBackground resizeMode='cover' style={styles.homepageBG} source={require("./assets/backgroundWhite.jpg")}>
-        <Text style={[styles.PSVFont, styles.homepageTitle]}> MATCH{'\n'} TRIVIA</Text>
-        <Timer />
-      </ImageBackground> 
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+          name='Home'
+          component={HomeScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  PSVFont: {
-    fontFamily: "PSVCondensed-Bold",
-  },
-  homepage: {
-    flex: 1,
-  },
-
-  homepageBG: {
-    flex: 1,
-    padding: 35
-  },
-
-  homepageTitle: {
-    fontSize: 28,
-    color: "white",
-    backgroundColor: "black",
-    alignSelf: "flex-start",
-  }
-});
-
 export default App;

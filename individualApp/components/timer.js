@@ -4,24 +4,14 @@ import {
   Text,
   useColorScheme,
   View,
-  Button
+  Vibration,
+  Button,
+  Pressable,
+  Alert
 } from 'react-native';
 
 const Timer = () =>  {
-  const countDownTime = 3600
-  const [time, setTime] = useState(
-    countDownTime
-  )
-
-  useEffect(() =>
-    {
-      const interval = setInterval(() => {
-        setTime(time => time - 1)
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  )
-
+  
   const formatTime = (time) => {
     const hour = Math.floor(time/3600)
     const minute = Math.floor(time/60) % 60
@@ -29,10 +19,53 @@ const Timer = () =>  {
     return hour.toString().padStart(2,0) + ":" + minute.toString().padStart(2, 0) + ":" + second.toString().padStart(2,0)
   }
 
+  const countDownTime = 2
+  const [time, setTime] = useState(
+    countDownTime
+  )
+
+  const [timerText, setTimerText] = useState(
+    formatTime(time) 
+  )
+
+  const [timerStyling, setTimerStyle] = useState(
+    styles.homepageTimerCount
+  )
+  const options = {
+    enableVibrateFallback: true,
+    ignoreAndroidSystemSettings: false,
+  };
+  
+  // Trigger impact feedback
+  useEffect(() =>
+    {
+      if (time <= 0) {
+        setTimerStyle(timerStyling => styles.TimerRed)
+        setTimerText(timerText => "Click me")
+      } else {
+        setTimerStyle(timerStyling => styles.homepageTimerCount)
+        setTimerText(timerText => formatTime(time))
+        const interval = setInterval(() => {
+          setTime(time => time - 1)
+          if (time <= 10) {
+            Vibration.vibrate(200)
+          }
+          else {
+            Vibration.vibrate(100)
+          }
+          
+        }, 1000);
+        return () => clearInterval(interval);
+      }   
+    }
+  )
+
   return (
     <View style={styles.homepageTimer}>
       <Text style={[styles.homepageTimerTitle, styles.PSVFont]}>QUIZ BEGINT OVER</Text>
-      <Text style={[styles.homepageTimerCount, styles.PSVFont]}>{formatTime(time)}</Text>
+      <Pressable onPress={() => Alert.alert("bruh")}>
+        <Text style={[timerStyling, styles.PSVFont]}>{timerText}</Text>
+      </Pressable>
     </View>
   )
 }
@@ -56,11 +89,19 @@ const styles = StyleSheet.create({
   },
 
   homepageTimerCount: {
-    fontSize: 78,
-    letterSpacing: 8,
+    fontSize: 54,
+    letterSpacing: 6,
     color: "white",
     paddingHorizontal: 10,
     backgroundColor: "black",
+  },
+  
+  TimerRed: {
+    fontSize: 54,
+    letterSpacing: 6,
+    color: "white",
+    paddingHorizontal: 10,
+    backgroundColor: "#ED1C24",
   }
 });
 
