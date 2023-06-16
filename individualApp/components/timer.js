@@ -10,8 +10,8 @@ import {
   Alert
 } from 'react-native';
 
-const Timer = () =>  {
-  
+function Timer({ navigateToCamera }) {
+
   const formatTime = (time) => {
     const hour = Math.floor(time/3600)
     const minute = Math.floor(time/60) % 60
@@ -57,15 +57,24 @@ const Timer = () =>  {
         }, 1000);
         return () => clearInterval(interval);
       }   
-    }
+    }, [time]
   )
+
+  if (timerText == "Click me") {
+    return (
+      <View style={styles.homepageTimer}>
+        <Text style={[styles.homepageTimerTitle, styles.PSVFont]}>QUIZ BEGINT OVER</Text>
+        <Pressable onPress={() => navigateToCamera()}>
+          <Text style={[timerStyling, styles.PSVFont]}>{timerText}</Text>
+        </Pressable>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.homepageTimer}>
       <Text style={[styles.homepageTimerTitle, styles.PSVFont]}>QUIZ BEGINT OVER</Text>
-      <Pressable onPress={() => Alert.alert("bruh")}>
-        <Text style={[timerStyling, styles.PSVFont]}>{timerText}</Text>
-      </Pressable>
+      <Text style={[timerStyling, styles.PSVFont]}>{timerText}</Text>
     </View>
   )
 }

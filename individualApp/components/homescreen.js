@@ -19,12 +19,12 @@ import {
 } from 'react-native';
 import Timer from "./timer";
 
-const Homescreen = () => {
+const Homescreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.homepage}>
       <ImageBackground resizeMode='cover' style={styles.homepageBG} source={require("../assets/backgroundWhite.jpg")}>
         <Text style={[styles.PSVFont, styles.homepageTitle]}> MATCH{'\n'} TRIVIA</Text>
-        <Timer />
+        <Timer navigateToCamera={() => navigation.navigate('Camera')} />
       </ImageBackground> 
     </SafeAreaView>
   );
